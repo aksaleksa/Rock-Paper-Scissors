@@ -7,80 +7,115 @@
 // According to the above rules, print out a statement with the result of that round
 // Keep a count of the score and repeat the game for a total of 5 rounds
 // At the end, print the final score
+// Refactored version:
+// Add buttons to make a simple interface plus event handlers
+// Within the game() function, ensure that the game finishes once a user reaches 5 points
+// Add a reset function so that the game can be wiped and restarted at any time
 
+let rockButton = document.querySelector("#rock");
+let paperButton = document.querySelector("#paper");
+let scissorsButton = document.querySelector("#scissors");
+let resetButton = document.querySelector("#reset");
+let result = document.querySelector("#result");
+let score = document.querySelector("#score");
+let playerScore = 0;
+let computerScore = 0;
+
+
+function game() {
+    rockButton.addEventListener("click", () => {
+        if (playerScore < 5 && computerScore < 5) {
+            playRound("rock");
+        }
+        else {
+            result.textContent =`That was fun! Here are the final results: 
+            You: ${playerScore} - Computer: ${computerScore}`;
+            return;
+        }
+    });
+
+    paperButton.addEventListener("click", () => {
+        if (playerScore < 5 && computerScore < 5) {
+            playRound("paper");
+        }
+        else {
+            result.textContent =`That was fun! Here are the final results: 
+            You: ${playerScore} - Computer: ${computerScore}`;
+            return;
+        }
+    });
+
+    scissorsButton.addEventListener("click", () => {
+        if (playerScore < 5 && computerScore < 5) {
+            playRound("scissors");
+        }
+        else {
+            result.textContent =`That was fun! Here are the final results: 
+            You: ${playerScore} - Computer: ${computerScore}`;
+            return;
+        }
+    });
+}
+
+function resetGame() {
+    resetButton.addEventListener("click", () => {
+        playerScore = 0;
+        computerScore = 0;
+        score.textContent = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
+        result.textContent = "Let's play again!";
+    });
+}
 
 function getComputerChoice() {
     let index = Math.floor(Math.random() * 3);
     return ["rock", "paper", "scissors"][index];
 }
 
-function playRound() {
+function playRound(playerChoice) {
     let computerChoice = getComputerChoice();
-    let playerChoice = prompt("Rock, paper or scissors: What do you choose?").toLowerCase();
-    let winner = "";
 
     if (playerChoice === computerChoice) {
-        console.log(`Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
-        It's a draw! No one wins this round!`);
-        winner = "none";
-        return winner;
+        result.textContent =`Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
+        It's a draw! No one wins this round!`;
+        score.textContent = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
     }
     else if (playerChoice === "rock" && computerChoice === "paper") {
-        console.log(`Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
-        Paper beats rock! You lose this round!`);
-        winner = "computer";
-        return winner;
+        computerScore++;
+        result.textContent = `Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
+        Paper beats rock! You lose this round!`;
+        score.textContent = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
     }
     else if (playerChoice === "rock" && computerChoice === "scissors") {
-        console.log(`Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
-        Rock beats scissors! You win this round!`);
-        winner = "player";
-        return winner;
+        playerScore++;
+        result.textContent = `Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
+        Rock beats scissors! You win this round!`;
+        score.textContent = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
     }
     else if (playerChoice === "paper" && computerChoice === "rock") {
-        console.log(`Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
-        Paper beats rock! You win this round!`);
-        winner = "player";
-        return winner;
+        playerScore++;
+        result.textContent = `Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
+        Paper beats rock! You win this round!`;
+        score.textContent = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
     }
     else if (playerChoice === "paper" && computerChoice === "scissors") {
-        console.log(`Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
-        Scissors beat paper! You lose this round!`);
-        winner = "computer";
-        return winner;
+        computerScore++;
+        result.textContent = `Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
+        Scissors beat paper! You lose this round!`;
+        score.textContent = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
     }
     else if (playerChoice === "scissors" && computerChoice === "rock") {
-        console.log(`Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
-        Rock beats scissors! You lose this round!`);
-        winner = "computer";
-        return winner;
+        computerScore++;
+        result.textContent = `Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
+        Rock beats scissors! You lose this round!`;
+        score.textContent = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
     }
     else {
-        console.log(`Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
-        Scissors beat paper! You win this round!`);
-        winner = "player";
-        return winner;
+        playerScore++;
+        result.textContent = `Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
+        Scissors beat paper! You win this round!`;
+        score.textContent = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
     }
-}
-
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-    let result = "";
-    while (playerScore + computerScore < 5) {
-        result = playRound();
-        if (result === "player") {
-            playerScore++;
-        }
-        else if (result === "computer") {
-            computerScore++;
-        }
-        else {
-            continue;
-        }
-    }
-    console.log(`That was fun! Here are the final results: 
-    You: ${playerScore} - Computer: ${computerScore}`);
 }
 
 game();
+resetGame();
