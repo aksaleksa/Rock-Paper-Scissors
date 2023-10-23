@@ -1,23 +1,14 @@
-// Rock paper scissors
-// Have the user choose between three choices: rock, paper and scissors
-// Have them type in their choice (not case sensitive) but don't worry about the interface
-// Generate a random choice for the computer of either rock, paper or scissors
-// Compare the computer's choice to that of the user
-// Remember: Rock beats scissors, paper beats rock, scissors beat paper. Two of the same is a draw.
-// According to the above rules, print out a statement with the result of that round
-// Keep a count of the score and repeat the game for a total of 5 rounds
-// At the end, print the final score
-// Refactored version:
-// Add buttons to make a simple interface plus event handlers
-// Within the game() function, ensure that the game finishes once a user reaches 5 points
-// Add a reset function so that the game can be wiped and restarted at any time
-
 let rockButton = document.querySelector("#rock");
 let paperButton = document.querySelector("#paper");
 let scissorsButton = document.querySelector("#scissors");
 let resetButton = document.querySelector("#reset");
+let points = document.querySelector("#points");
+let playerPoints = document.querySelector("#player-points")
+let computerPoints = document.querySelector("#computer-points")
 let result = document.querySelector("#result");
-let score = document.querySelector("#score");
+let playerResult = document.querySelector("#player-result");
+let computerResult = document.querySelector("#computer-result")
+let message = document.querySelector("#message");
 let playerScore = 0;
 let computerScore = 0;
 
@@ -28,9 +19,8 @@ function game() {
             playRound("rock");
         }
         else {
-            result.textContent =`That was fun! Here are the final results: 
+            message.textContent =`That was fun! Here are the final results: 
             You: ${playerScore} - Computer: ${computerScore}`;
-            return;
         }
     });
 
@@ -39,9 +29,8 @@ function game() {
             playRound("paper");
         }
         else {
-            result.textContent =`That was fun! Here are the final results: 
+            message.textContent =`That was fun! Here are the final results: 
             You: ${playerScore} - Computer: ${computerScore}`;
-            return;
         }
     });
 
@@ -50,20 +39,22 @@ function game() {
             playRound("scissors");
         }
         else {
-            result.textContent =`That was fun! Here are the final results: 
+            message.textContent =`That was fun! Here are the final results: 
             You: ${playerScore} - Computer: ${computerScore}`;
-            return;
         }
+    });
+
+    resetButton.addEventListener("click", () => {
+        resetGame();
     });
 }
 
 function resetGame() {
-    resetButton.addEventListener("click", () => {
-        playerScore = 0;
-        computerScore = 0;
-        score.textContent = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
-        result.textContent = "Let's play again!";
-    });
+    playerScore = 0;
+    computerScore = 0;
+    updateScore(playerScore, computerScore);
+    updateResult(" ", " ");
+    message.textContent = "Let's play again!";
 }
 
 function getComputerChoice() {
@@ -75,47 +66,56 @@ function playRound(playerChoice) {
     let computerChoice = getComputerChoice();
 
     if (playerChoice === computerChoice) {
-        result.textContent =`Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
-        It's a draw! No one wins this round!`;
-        score.textContent = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
+        updateResult(playerChoice, computerChoice);
+        updateScore(playerScore, computerScore);
+        message.textContent = "It's a draw! No one wins this round!";
     }
     else if (playerChoice === "rock" && computerChoice === "paper") {
         computerScore++;
-        result.textContent = `Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
-        Paper beats rock! You lose this round!`;
-        score.textContent = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
+        updateResult(playerChoice, computerChoice);
+        updateScore(playerScore, computerScore);
+        message.textContent = "Paper beats rock! You lose this round!";
     }
     else if (playerChoice === "rock" && computerChoice === "scissors") {
         playerScore++;
-        result.textContent = `Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
-        Rock beats scissors! You win this round!`;
-        score.textContent = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
+        updateResult(playerChoice, computerChoice);
+        updateScore(playerScore, computerScore);
+        message.textContent = "Rock beats scissors! You win this round!";
     }
     else if (playerChoice === "paper" && computerChoice === "rock") {
         playerScore++;
-        result.textContent = `Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
-        Paper beats rock! You win this round!`;
-        score.textContent = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
+        updateResult(playerChoice, computerChoice);
+        updateScore(playerScore, computerScore);
+        message.textContent = "Paper beats rock! You win this round!";
     }
     else if (playerChoice === "paper" && computerChoice === "scissors") {
         computerScore++;
-        result.textContent = `Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
-        Scissors beat paper! You lose this round!`;
-        score.textContent = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
+        updateResult(playerChoice, computerChoice);
+        updateScore(playerScore, computerScore);
+        message.textContent = "Scissors beat paper! You lose this round!";
     }
     else if (playerChoice === "scissors" && computerChoice === "rock") {
         computerScore++;
-        result.textContent = `Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
-        Rock beats scissors! You lose this round!`;
-        score.textContent = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
+        updateResult(playerChoice, computerChoice);
+        updateScore(playerScore, computerScore);
+        message.textContent = "Rock beats scissors! You lose this round!";
     }
     else {
         playerScore++;
-        result.textContent = `Your choice: ${playerChoice}, Computer's choice: ${computerChoice}.
-        Scissors beat paper! You win this round!`;
-        score.textContent = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
+        updateResult(playerChoice, computerChoice);
+        updateScore(playerScore, computerScore);
+        message.textContent = "Scissors beat paper! You win this round!";
     }
 }
 
+function updateScore(plr, comp) {
+    playerPoints.textContent = `Your Score: ${plr}`;
+    computerPoints.textContent = `Computer Score: ${comp}`;
+}
+
+function updateResult(plr, comp) {
+    playerResult.textContent = `Your Choice: ${plr}`;
+    computerResult.textContent = `Computer Choice: ${comp}`
+}
+
 game();
-resetGame();
