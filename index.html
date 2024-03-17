@@ -7,30 +7,36 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>What is your weapon of choice: Rock, Paper or Scissors?</h1>
-    <div id="container">
-        <div id="points">
-            <div id="player-points"></div>
-            <div id="computer-points"></div>
+    <h1>Rock, Paper or Scissors? Choose your weapon carefully</h1>
+    <div id="board">
+        <div id="player">
+            <h2>You</h2>
+            <div id="player-weapon"></div>
+            <p id="player-points"></p>
+            <!-- <img src="" alt="Player Choice"> -->
         </div>
-        
-        <div id="result">
-            <div id="player-result"></div>
-            <div id="computer-result"></div>
+        <div id="computer">
+            <h2>Computer</h2>
+            <div id="computer-weapon"></div>
+            <p id="computer-points"></p>
+            <!-- <img src="" alt="Computer Choice"> -->
         </div>
-        
-        <div id="message"></div>
+    </div>
 
-        <div id="buttons">
+    <div id="message">You start. First to 5 wins!</div> 
+
+    <div id="buttons">
+        <div>
             <button id="rock">Rock</button>
             <button id="paper">Paper</button>
-            <button id="scissors">Scissors</button>
+            <button id="scissors">Scissors</button>    
         </div>
-
         <div>
             <button id="reset">Reset Game</button>
-        </div>        
+        </div> 
     </div>
+
+
     <script src="game.js"></script>
 </body>
 </html>
